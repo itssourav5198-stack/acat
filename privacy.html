@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — ACAT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand">
+      <span class="mark"><img id="logoMark" src="assets/logo.png" alt="ACAT logo" onerror="this.style.display='none'"></span>
+      ACAT
+    </a>
+    <button class="navtoggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="navlinks" id="navLinks">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="blog.html">Safety Blog</a></li>
+      <li><a href="index.html#impact">Impact</a></li>
+      <li><a href="index.html#report">Report a Scam</a></li>
+      <li><a href="index.html#join">Join Us</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div class="weave"></div>
+
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Privacy Policy</span>
+    <h1>How we handle your information.</h1>
+    <p>ACAT is a volunteer initiative, not a company — but we still take the information you share with us seriously.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap policy-body">
+    <span class="updated-tag">Last updated: July 2026</span>
+
+    <h2>1. Who we are</h2>
+    <p>Assam Cyber Aegis Team (ACAT) is an independent, volunteer-run community initiative focused on cyber safety awareness across Assam. ACAT is not a registered company or government body, and this policy explains how information submitted through this website is handled.</p>
+
+    <h2>2. What information we collect</h2>
+    <p>We only collect what you choose to share through our forms:</p>
+    <ul>
+      <li><strong>Scam Report form:</strong> name, contact number or email, city, scam type, a description of what happened, and an optional screenshot.</li>
+      <li><strong>Volunteer Sign-up form:</strong> name, contact number or email, city, and your reason for wanting to join.</li>
+    </ul>
+    <p>We never ask for OTPs, passwords, PINs, card numbers, or banking credentials through this website, and you should never share them with us or anyone else claiming to represent ACAT.</p>
+
+    <h2>3. How we use your information</h2>
+    <p>Form submissions are sent directly to ACAT's team email so a volunteer can review the report or sign-up and follow up with you. We use this information only to respond to your submission and, where relevant, to help guide you toward official channels such as the National Cyber Crime Reporting Portal (cybercrime.gov.in) or the 1930 helpline.</p>
+
+    <h2>4. How your information is stored</h2>
+    <p>Submissions are delivered by email to ACAT's team inbox. We do not sell, rent, or share your information with advertisers or unrelated third parties.</p>
+
+    <h2>5. Your choices</h2>
+    <p>You can choose not to fill in optional fields, and you can contact us at any time to ask what information we hold about you or to request that it be deleted.</p>
+
+    <h2>6. Contact</h2>
+    <p>For any privacy-related questions, reach out at <a href="mailto:dhirajvaii97@gmail.com">dhirajvaii97@gmail.com</a> or via <a href="https://wa.me/919957322262" target="_blank" rel="noopener">WhatsApp</a>.</p>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-line">ACAT</div>
+        <p>Assam Cyber Aegis Team is an independent, volunteer-run community initiative for digital safety awareness. Not affiliated with any government agency.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="blog.html">Safety Blog</a></li>
+          <li><a href="index.html#impact">Community Impact</a></li>
+          <li><a href="index.html#report">Report a Scam</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Reach Us</h4>
+        <ul>
+          <li><a href="https://wa.me/919957322262" target="_blank" rel="noopener">Contact Us on WhatsApp</a></li>
+          <li><a href="mailto:dhirajvaii97@gmail.com">dhirajvaii97@gmail.com</a></li>
+          <li><a href="https://instagram.com/assam_cyber_aegis-team" target="_blank" rel="noopener">Instagram</a></li>
+          <li>Assam, India</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Assam Cyber Aegis Team</span>
+      <span>Website by LyroWeb Solutions</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+</script>
+
+</body>
+</html>
