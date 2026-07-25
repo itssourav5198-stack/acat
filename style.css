@@ -37,7 +37,7 @@ img{ max-width:100%; display:block; }
 }
 .wrap{ max-width: 1120px; margin: 0 auto; padding: 0 28px; }
 
-/* Woven gamosa signature pattern */
+
 .weave{
   height: 10px;
   width: 100%;
@@ -65,8 +65,7 @@ nav{
   font-family:'Fraunces', serif; font-weight:600; font-size:19px;
   color: var(--cream); text-decoration:none;
 }
-/* Logo container — drop your PNG/SVG logo into assets/logo.png and it will
-   replace the placeholder mark below automatically (see <img id="logoMark">) */
+
 .brand .mark{
   width:32px;height:32px; border-radius:50%;
   background: conic-gradient(var(--gold), var(--red), var(--navy-deep), var(--gold));
@@ -171,8 +170,7 @@ section{ padding: 84px 0; }
 .team-alt .section-head p{ color: rgba(245,240,230,0.72); }
 .team-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:24px; }
 @media (max-width: 860px){ .team-grid{ grid-template-columns: repeat(2,1fr); } }
-/* Team photo placeholder — drop images into assets/ (e.g. assets/team-dhiraj.jpg)
-   and set the <img src> in the HTML. Until then this shows an initials avatar. */
+
 .avatar{
   width:72px; height:72px; border-radius:50%;
   background: linear-gradient(135deg, var(--gold), var(--red));
