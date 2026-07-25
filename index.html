@@ -78,7 +78,7 @@
     <div class="team-grid reveal">
       <div class="team-card">
         <div class="avatar">
-          <!-- Drop photo into assets/team-dhiraj.jpg and update src -->
+      
           <img src="dhiraj.jpeg" alt="Dhiraj Nath" onerror="this.parentElement.innerHTML='DN'">
         </div>
         <h3>Dhiraj Nath</h3>
@@ -86,7 +86,7 @@
       </div>
       <div class="team-card">
         <div class="avatar">
-          <!-- Drop photo into assets/team-sourav.jpg and update src -->
+   
           <img src="sourav.jpeg" alt="Sourav Maity" onerror="this.parentElement.innerHTML='SM'">
         </div>
         <h3>Sourav Maity</h3>
@@ -162,11 +162,7 @@
       <div class="form-card" id="report">
         <h3>Report a Scam</h3>
         <p class="sub">Tell us what happened — we'll help guide you on next steps.</p>
-        <!--
-          FORM SETUP: create a free account at https://formspree.io, make a new
-          form, and replace YOUR_FORM_ID below with the ID it gives you.
-          Submissions will then land directly in dhirajvaii97@gmail.com.
-        -->
+     
         <form action="https://formspree.io/f/xqergded" method="POST" onsubmit="return handleForm(event,'reportMsg')">
           <input type="hidden" name="_subject" value="New Scam Report — ACAT Website">
           <label for="rName">Name</label>
@@ -255,8 +251,7 @@
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
   function handleForm(e, msgId){
-    // Formspree still receives the submission via fetch below; we just
-    // show the confirmation message inline instead of redirecting.
+    
     e.preventDefault();
     const form = e.target;
     fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
