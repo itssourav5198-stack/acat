@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assam Cyber Aegis Team (ACAT) — Weaving a Safer Digital Assam</title>
+<meta name="description" content="ACAT is an independent volunteer cyber-safety initiative helping people across Assam stay safe from online scams and phishing — free of cost.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #12213A;
+    --navy-deep: #0B1626;
+    --red: #A63D2E;
+    --red-bright: #C24C3A;
+    --gold: #C9A24B;
+    --cream: #F5F0E6;
+    --ink: #1D2233;
+    --slate: #5B6472;
+    --slate-light: #8891A0;
+    --line: rgba(245,240,230,0.14);
+    --radius: 2px;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+  body{
+    margin:0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  h1,h2,h3{ font-family: 'Fraunces', serif; margin:0; }
+  a{ color: inherit; }
+  img{ max-width:100%; display:block; }
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: inline-block;
+  }
+  .wrap{ max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+  /* Woven gamosa signature pattern */
+  .weave{
+    height: 10px;
+    width: 100%;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--red) 0px, var(--red) 18px,
+      var(--gold) 18px, var(--gold) 22px,
+      var(--navy-deep) 22px, var(--navy-deep) 40px,
+      var(--gold) 40px, var(--gold) 44px
+    );
+  }
+
+  /* NAV */
+  header{
+    position: sticky; top:0; z-index: 50;
+    background: var(--navy);
+    border-bottom: 1px solid rgba(201,162,75,0.25);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 16px 28px; max-width: 1120px; margin:0 auto;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces', serif; font-weight:600; font-size:19px;
+    color: var(--cream); text-decoration:none;
+  }
+  .brand .mark{
+    width:30px;height:30px; border-radius:50%;
+    background: conic-gradient(var(--gold), var(--red), var(--navy-deep), var(--gold));
+    flex-shrink:0;
+  }
+  .navlinks{ display:flex; gap:28px; list-style:none; margin:0; padding:0; }
+  .navlinks a{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; letter-spacing:.06em;
+    text-transform:uppercase; color: var(--cream); text-decoration:none; opacity:.8;
+    transition:opacity .2s;
+  }
+  .navlinks a:hover, .navlinks a:focus-visible{ opacity:1; color: var(--gold); }
+  .navlinks a:focus-visible, a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline: 2px solid var(--gold); outline-offset:3px;
+  }
+  .navtoggle{ display:none; background:none; border:none; color:var(--cream); font-size:24px; cursor:pointer; }
+
+  @media (max-width: 780px){
+    .navlinks{
+      position:absolute; top:100%; left:0; right:0; background: var(--navy);
+      flex-direction:column; padding: 18px 28px; gap:16px; border-bottom:1px solid rgba(201,162,75,0.25);
+      display:none;
+    }
+    .navlinks.open{ display:flex; }
+    .navtoggle{ display:block; }
+  }
+
+  /* HERO */
+  .hero{
+    background: var(--navy);
+    color: var(--cream);
+    padding: 96px 0 84px;
+    position: relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 85% 20%, rgba(201,162,75,0.14), transparent 45%),
+      radial-gradient(circle at 8% 80%, rgba(166,61,46,0.18), transparent 40%);
+    pointer-events:none;
+  }
+  .hero-inner{ position:relative; max-width: 760px; }
+  .hero h1{
+    font-size: clamp(34px, 5vw, 56px);
+    font-weight: 600;
+    line-height: 1.08;
+    margin-bottom: 22px;
+  }
+  .hero h1 em{ font-style: italic; color: var(--gold); }
+  .hero p.lead{
+    font-size: 17.5px; color: rgba(245,240,230,0.82); max-width: 560px; margin-bottom: 34px;
+  }
+  .cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 13px 26px; border-radius: var(--radius);
+    font-family:'IBM Plex Mono', monospace; font-size:13px; letter-spacing:.04em; text-transform:uppercase;
+    text-decoration:none; cursor:pointer; border:1px solid transparent; transition: transform .15s, background .2s;
+  }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn-primary{ background: var(--red); color: var(--cream); }
+  .btn-primary:hover{ background: var(--red-bright); }
+  .btn-ghost{ background: transparent; color: var(--cream); border-color: rgba(245,240,230,0.4); }
+  .btn-ghost:hover{ border-color: var(--gold); color: var(--gold); }
+  .disclaimer-tag{
+    margin-top: 40px; font-family:'IBM Plex Mono', monospace; font-size:12px;
+    color: rgba(245,240,230,0.55); border-left: 2px solid var(--gold); padding-left: 12px;
+  }
+
+  section{ padding: 84px 0; }
+  .section-head{ max-width: 640px; margin-bottom: 48px; }
+  .section-head h2{ font-size: clamp(26px, 3.4vw, 36px); font-weight:600; color: var(--ink); }
+  .section-head p{ color: var(--slate); margin-top:14px; font-size:15.5px; }
+
+  /* ABOUT / WHAT WE DO */
+  .grid-4{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  @media (max-width: 900px){ .grid-4{ grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px){ .grid-4{ grid-template-columns: 1fr; } }
+  .card{
+    background: #fff; border: 1px solid rgba(29,34,51,0.08);
+    padding: 26px 22px; border-radius: var(--radius);
+  }
+  .card .icon{ font-size: 22px; margin-bottom: 14px; }
+  .card h3{ font-size: 17px; font-weight:600; margin-bottom:8px; }
+  .card p{ font-size: 14px; color: var(--slate); margin:0; }
+
+  .about-split{ display:grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items:start; }
+  @media (max-width: 860px){ .about-split{ grid-template-columns: 1fr; } }
+  .about-split p{ color: var(--slate); font-size:15.5px; }
+  .note-box{
+    margin-top:20px; background: rgba(166,61,46,0.06); border-left: 3px solid var(--red);
+    padding: 14px 18px; font-size: 13.5px; color: var(--ink);
+  }
+
+  /* TEAM */
+  .team-alt{ background: var(--navy); color: var(--cream); }
+  .team-alt .section-head h2{ color: var(--cream); }
+  .team-alt .section-head p{ color: rgba(245,240,230,0.72); }
+  .team-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:24px; }
+  @media (max-width: 860px){ .team-grid{ grid-template-columns: repeat(2,1fr); } }
+  .avatar{
+    width:64px; height:64px; border-radius:50%;
+    background: linear-gradient(135deg, var(--gold), var(--red));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:600; color:var(--navy-deep); font-size:20px;
+    margin-bottom:16px;
+  }
+  .team-card h3{ font-size:16px; color:var(--cream); margin-bottom:2px; }
+  .team-card .role{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color: var(--gold); text-transform:uppercase; letter-spacing:.05em; }
+
+  /* IMPACT */
+  .stats-row{ display:grid; grid-template-columns: repeat(3,1fr); gap:24px; margin-bottom: 52px; }
+  @media (max-width: 700px){ .stats-row{ grid-template-columns: 1fr; } }
+  .stat{ border-top: 3px solid var(--gold); padding-top:16px; }
+  .stat .num{ font-family:'Fraunces',serif; font-size: 42px; font-weight:700; color: var(--navy); }
+  .stat .label{ font-family:'IBM Plex Mono',monospace; font-size:12px; color: var(--slate); text-transform:uppercase; letter-spacing:.06em; }
+  .stat .fine{ font-size: 12px; color: var(--slate-light); margin-top:4px; }
+
+  .testimonials{ display:grid; grid-template-columns: repeat(3,1fr); gap:20px; }
+  @media (max-width: 860px){ .testimonials{ grid-template-columns: 1fr; } }
+  .tcard{
+    background:#fff; border:1px solid rgba(29,34,51,0.08); padding:24px; border-radius: var(--radius);
+  }
+  .tcard p.quote{ font-size:14.5px; color: var(--ink); font-style: italic; margin-bottom:14px; }
+  .tcard .who{ font-family:'IBM Plex Mono',monospace; font-size:12px; color: var(--slate); }
+  .placeholder-note{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color: var(--slate-light); margin-top:8px;
+  }
+
+  /* BLOG */
+  .blog-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:24px; }
+  @media (max-width: 860px){ .blog-grid{ grid-template-columns: 1fr; } }
+  .post{ background:#fff; border:1px solid rgba(29,34,51,0.08); border-radius: var(--radius); overflow:hidden; }
+  .post .tag{
+    padding: 20px 20px 0; font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase;
+    letter-spacing:.06em; color: var(--red);
+  }
+  .post .body{ padding: 10px 20px 22px; }
+  .post h3{ font-size:17px; margin-bottom:8px; }
+  .post p{ font-size:13.8px; color: var(--slate); margin-bottom:14px; }
+  .post a{ font-family:'IBM Plex Mono',monospace; font-size:12px; text-decoration:none; color: var(--navy); border-bottom:1px solid var(--gold); }
+
+  /* FORMS */
+  .forms-section{ background: #EFE9DC; }
+  .form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  @media (max-width: 900px){ .form-grid{ grid-template-columns: 1fr; } }
+  .form-card{ background:#fff; border:1px solid rgba(29,34,51,0.08); border-radius: var(--radius); padding: 30px 28px; }
+  .form-card h3{ font-size:19px; margin-bottom:6px; }
+  .form-card .sub{ font-size:13.5px; color: var(--slate); margin-bottom:22px; }
+  label{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; color: var(--slate); display:block; margin-bottom:6px; margin-top:16px; }
+  label:first-of-type{ margin-top:0; }
+  input, textarea{
+    width:100%; padding: 11px 12px; border:1px solid rgba(29,34,51,0.18); border-radius: var(--radius);
+    font-family:'IBM Plex Sans', sans-serif; font-size:14px; background:#FCFAF5;
+  }
+  textarea{ resize: vertical; min-height:90px; }
+  .form-card .btn{ margin-top:22px; width:100%; justify-content:center; border:none; }
+  .helpline-note{
+    font-size:12.5px; color: var(--slate); margin-top:16px; padding-top:14px; border-top:1px dashed rgba(29,34,51,0.15);
+  }
+  .form-msg{ display:none; margin-top:14px; font-size:13.5px; color: var(--red); font-weight:600; }
+  .form-msg.show{ display:block; }
+
+  /* CONTACT / FOOTER */
+  footer{ background: var(--navy-deep); color: rgba(245,240,230,0.75); padding: 56px 0 30px; }
+  .footer-grid{ display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap:36px; margin-bottom: 40px; }
+  @media (max-width: 780px){ .footer-grid{ grid-template-columns: 1fr; } }
+  footer h4{ font-family:'IBM Plex Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color: var(--gold); margin-bottom:14px; }
+  footer .brand-line{ font-family:'Fraunces',serif; font-size:20px; color: var(--cream); margin-bottom:12px; }
+  footer p{ font-size:13.5px; }
+  footer ul{ list-style:none; padding:0; margin:0; }
+  footer li{ margin-bottom:10px; font-size:13.5px; }
+  footer a{ text-decoration:none; color: rgba(245,240,230,0.75); }
+  footer a:hover{ color: var(--gold); }
+  .footer-bottom{
+    border-top: 1px solid rgba(245,240,230,0.12); padding-top: 22px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:12px; color: rgba(245,240,230,0.5); font-family:'IBM Plex Mono',monospace;
+  }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#top" class="brand"><span class="mark"></span> ACAT</a>
+    <button class="navtoggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="navlinks" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#blog">Safety Blog</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#report">Report a Scam</a></li>
+      <li><a href="#join">Join Us</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div class="weave"></div>
+
+<section class="hero" id="top">
+  <div class="wrap hero-inner">
+    <span class="eyebrow">Assam Cyber Aegis Team</span>
+    <h1>Weaving a <em>safer digital Assam</em>, one thread at a time.</h1>
+    <p class="lead">ACAT is an independent, volunteer-run community helping people across Assam recognise scams, stay safe online, and know exactly where to turn when something goes wrong — free of cost.</p>
+    <div class="cta-row">
+      <a href="#report" class="btn btn-primary">Report a Scam</a>
+      <a href="#join" class="btn btn-ghost">Join as Volunteer</a>
+    </div>
+    <p class="disclaimer-tag">Independent volunteer initiative — not affiliated with any government agency.</p>
+  </div>
+</section>
+<div class="weave"></div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-split">
+      <div class="reveal">
+        <span class="eyebrow">Our Mission</span>
+        <h2 style="font-size:28px; margin-bottom:16px;">Awareness, spread person to person.</h2>
+        <p>Just like a gamosa is woven thread by thread until it holds strong, ACAT is built volunteer by volunteer — ordinary people across Assam sharing what they know so their families, neighbours, and communities don't fall prey to online fraud.</p>
+        <p>We don't charge for guidance, we don't ask for your OTP or bank details, and we always point serious cases toward the official cybercrime channels.</p>
+        <div class="note-box">Every report shared with us is handled with care. For matters involving money or personal documents, we guide you to file directly at <strong>cybercrime.gov.in</strong> or call <strong>1930</strong> — our volunteers assist, they don't replace official action.</div>
+      </div>
+      <div class="grid-4" style="grid-template-columns: 1fr 1fr; gap:18px;" class="reveal">
+        <div class="card"><div class="icon">🛡️</div><h3>Cyber Awareness</h3><p>Spreading digital safety and phishing awareness across social media and local communities.</p></div>
+        <div class="card"><div class="icon">🤝</div><h3>Community Support</h3><p>If someone faces a scam, the group comes together to help them understand next steps.</p></div>
+        <div class="card"><div class="icon">🔍</div><h3>Phishing & Scam Reporting</h3><p>Analysing suspicious links and alerting the community before they spread further.</p></div>
+        <div class="card"><div class="icon">🧭</div><h3>Basic Guidance</h3><p>Simple safety tips for friends and family, and help filing official cybercrime reports.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="team-alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Who We Are</span>
+      <h2>Volunteers first, always.</h2>
+      <p>ACAT has no paid staff — every member gives their time because they believe a safer internet starts with an informed neighbour.</p>
+    </div>
+    <div class="team-grid reveal">
+      <div class="team-card"><div class="avatar">DN</div><h3>Founding Volunteer</h3><div class="role">Community Lead</div></div>
+      <div class="team-card"><div class="avatar">CA</div><h3>Volunteer</h3><div class="role">Scam Analysis</div></div>
+      <div class="team-card"><div class="avatar">CA</div><h3>Volunteer</h3><div class="role">Awareness Outreach</div></div>
+      <div class="team-card"><div class="avatar">CA</div><h3>Volunteer</h3><div class="role">Community Support</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="impact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Community Impact</span>
+      <h2>Every case, every camp, every conversation counts.</h2>
+      <p>Sample figures shown below — replace with ACAT's real numbers before launch.</p>
+    </div>
+    <div class="stats-row reveal">
+      <div class="stat"><div class="num">150+</div><div class="label">People Guided</div><div class="fine">Directly helped through the group and community outreach</div></div>
+      <div class="stat"><div class="num">12</div><div class="label">Awareness Camps</div><div class="fine">Sessions conducted across towns in Assam</div></div>
+      <div class="stat"><div class="num">40+</div><div class="label">Scams Flagged</div><div class="fine">Phishing links and fraud attempts identified and shared</div></div>
+    </div>
+    <div class="testimonials reveal">
+      <div class="tcard"><p class="quote">"They helped my father recognise a fake loan message before he shared any details."</p><div class="who">— Community member, Guwahati</div></div>
+      <div class="tcard"><p class="quote">"The group's alert saved our WhatsApp circle from a job-scam link that was going around."</p><div class="who">— Community member, Jorhat</div></div>
+      <div class="tcard"><p class="quote">"Simple, honest advice — no jargon, just what to do next."</p><div class="who">— Community member, Dibrugarh</div></div>
+    </div>
+    <p class="placeholder-note">Placeholder testimonials — swap in real quotes (with permission) once collected.</p>
+  </div>
+</section>
+
+<section id="blog" style="background:#EFE9DC;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Cyber Safety Blog</span>
+      <h2>Learn to spot it before it spreads.</h2>
+      <p>Short, practical reads on the scams circulating right now.</p>
+    </div>
+    <div class="blog-grid reveal">
+      <div class="post">
+        <div class="tag">Phishing</div>
+        <div class="body">
+          <h3>Five signs a "bank" message is fake</h3>
+          <p>Real banks never ask for your PIN over SMS. Here's what to check before you click anything.</p>
+          <a href="#">Read the guide →</a>
+        </div>
+      </div>
+      <div class="post">
+        <div class="tag">Job Scams</div>
+        <div class="body">
+          <h3>The "work from home" trap</h3>
+          <p>How fraudulent recruiters use urgency and upfront fees to target job seekers across Assam.</p>
+          <a href="#">Read the guide →</a>
+        </div>
+      </div>
+      <div class="post">
+        <div class="tag">Digital Hygiene</div>
+        <div class="body">
+          <h3>Securing a shared family phone</h3>
+          <p>Simple settings changes that protect parents and grandparents from common scam entry points.</p>
+          <a href="#">Read the guide →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="forms-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Get Help or Get Involved</span>
+      <h2>Report a scam, or join the effort.</h2>
+    </div>
+    <div class="form-grid reveal">
+      <div class="form-card" id="report">
+        <h3>Report a Scam</h3>
+        <p class="sub">Tell us what happened — we'll help guide you on next steps.</p>
+        <form onsubmit="return handleForm(event,'reportMsg')">
+          <label for="rName">Name</label>
+          <input id="rName" type="text" required>
+          <label for="rContact">Phone or Email</label>
+          <input id="rContact" type="text" required>
+          <label for="rWhat">What happened?</label>
+          <textarea id="rWhat" required placeholder="Describe the message, link, or call — no need to share OTPs or passwords"></textarea>
+          <label for="rFile">Screenshot (optional)</label>
+          <input id="rFile" type="file" accept="image/*">
+          <button class="btn btn-primary" type="submit">Submit Report</button>
+          <p class="form-msg" id="reportMsg">Thank you — a volunteer will follow up soon. For urgent financial fraud, also call the 1930 helpline or file at cybercrime.gov.in.</p>
+        </form>
+        <p class="helpline-note">Never share OTPs, passwords, or card numbers — with us or anyone else.</p>
+      </div>
+      <div class="form-card" id="join">
+        <h3>Join as Volunteer</h3>
+        <p class="sub">No technical background required — just willingness to help.</p>
+        <form onsubmit="return handleForm(event,'joinMsg')">
+          <label for="jName">Name</label>
+          <input id="jName" type="text" required>
+          <label for="jContact">Phone or Email</label>
+          <input id="jContact" type="text" required>
+          <label for="jCity">City / Town</label>
+          <input id="jCity" type="text" required>
+          <label for="jWhy">Why do you want to join?</label>
+          <textarea id="jWhy"></textarea>
+          <button class="btn btn-primary" type="submit">Submit</button>
+          <p class="form-msg" id="joinMsg">Thanks for stepping up — we'll reach out with onboarding details soon.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-line">ACAT</div>
+        <p>Assam Cyber Aegis Team is an independent, volunteer-run community initiative for digital safety awareness. Not affiliated with any government agency.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#blog">Safety Blog</a></li>
+          <li><a href="#impact">Community Impact</a></li>
+          <li><a href="#report">Report a Scam</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Reach Us</h4>
+        <ul>
+          <li><a href="https://wa.me/919957322262" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:contact@acat.example">contact@acat.example</a></li>
+          <li>Assam, India</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Assam Cyber Aegis Team</span>
+      <span>Website by LyroWeb Solutions</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  function handleForm(e, msgId){
+    e.preventDefault();
+    document.getElementById(msgId).classList.add('show');
+    e.target.reset();
+    return false;
+  }
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if(entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
