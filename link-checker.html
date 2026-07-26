@@ -153,11 +153,8 @@ footer a{ color:var(--gold); text-decoration:none; }
     <div class="review-box" id="reviewBox">
       <h3>Send to ACAT for manual review</h3>
       <p class="sub">A volunteer will take a closer look and get back to you if you leave contact info.</p>
-      <!--
-        FORM SETUP: create a free account at https://formspree.io, make a new
-        form, and replace YOUR_FORM_ID below. Submissions land in your inbox.
-      -->
-      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="return submitReview(event)">
+
+      <form action="https://formspree.io/f/xqergded" method="POST" onsubmit="return submitReview(event)">
         <input type="hidden" name="_subject" value="Link Review Request — ACAT Link Checker">
         <label for="revUrl">Link</label>
         <input type="text" id="revUrl" name="Link" readonly>
@@ -264,18 +261,14 @@ async function runCheck(){
     score = 100;
     flags.unshift('Confirmed by Google Safe Browsing as a known malicious or phishing site.');
     stamp.classList.add('risk'); stampWord = 'Confirmed Threat'; verdictLabel = 'Confirmed Threat — Do Not Visit';
-    reviewToggle.style.display = 'inline-flex';
   } else if(score >= 55){
     stamp.classList.add('risk'); stampWord = 'High Risk'; verdictLabel = 'High Risk — Avoid This Link';
-    reviewToggle.style.display = 'inline-flex';
   } else if(score >= 25){
     stamp.classList.add('caution'); stampWord = 'Caution'; verdictLabel = 'Be Cautious';
-    reviewToggle.style.display = 'inline-flex';
   } else {
     stamp.classList.add('safe'); stampWord = 'Not Flagged'; verdictLabel = 'Not Flagged — Still Stay Alert';
-    reviewToggle.style.display = 'none';
-    document.getElementById('reviewBox').classList.remove('show');
   }
+  reviewToggle.style.display = 'inline-flex';
   stamp.textContent = stampWord;
   verdict.textContent = verdictLabel;
   document.getElementById('checkedUrl').textContent = url.href;
