@@ -256,7 +256,7 @@
           <label for="rContact">Phone</label>
           <input id="rContact" name="Contact" type="text" required>
                       <label for="rEmail">Email</label>
-          <input id="rEmail" name="Contact" type="text" required>
+          <input id="rEmail" name="Email" type="text" required>
           <label for="rCity">Location / City</label>
           <input id="rCity" name="City" type="text" required>
           <label for="rType">Type of Scam</label>
@@ -286,7 +286,7 @@
           <label for="jContact">Phone</label>
           <input id="jContact" name="Contact" type="text" required>
                                   <label for="jEmail">Email</label>
-          <input id="jEmail" name="Contact" type="text" required>
+          <input id="jEmail" name="Email" type="text" required>
           <label for="jCity">City / Town</label>
           <input id="jCity" name="City" type="text" required>
           <label for="jWhy">Why do you want to join?</label>
@@ -342,15 +342,22 @@
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
   function handleForm(e, msgId){
-    
-    e.preventDefault();
-    const form = e.target;
-    fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
-      .catch(() => {});
-    document.getElementById(msgId).classList.add('show');
-    form.reset();
-    return false;
-  }
+e.preventDefault();
+const form = e.target;
+fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+.then(res => {
+if (res.ok) {
+document.getElementById(msgId).classList.add('show');
+form.reset();
+} else {
+alert('Submission failed. Please try again ya WhatsApp pe contact karo.');
+}
+})
+.catch(() => {
+alert('Network error — submission nahi ho payi. Please try again.');
+});
+return false;
+}
 
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
