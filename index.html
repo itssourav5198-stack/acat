@@ -249,17 +249,16 @@
         <h3>Report a Scam</h3>
         <p class="sub">Tell us what happened — we'll help guide you on next steps.</p>
         <form action="https://forminit.com/f/y0hlziu7uxe" method="POST" onsubmit="return handleForm(event,'reportMsg')">
-          <input type="hidden" name="_subject" value="New Scam Report — ACAT Website">
           <label for="rName">Name</label>
-          <input id="rName" name="Name" type="text" required>
+          <input id="rName" name="fi-sender-fullName" type="text" required>
           <label for="rContact">Phone</label>
-          <input id="rContact" name="Contact" type="text" required>
+          <input id="rContact" name="fi-phone-contact" type="text" required>
                       <label for="rEmail">Email</label>
-          <input id="rEmail" name="Email" type="text" required>
+          <input id="rEmail" name="fi-sender-email" type="text" required>
           <label for="rCity">Location / City</label>
-          <input id="rCity" name="City" type="text" required>
+          <input id="rCity" name="fi-text-city" type="text" required>
           <label for="rType">Type of Scam</label>
-          <select id="rType" name="Scam Type" required>
+          <select id="rType" name="fi-select-scamType" required>
             <option value="">Select one</option>
             <option>Phishing</option>
             <option>Job Scam</option>
@@ -267,9 +266,9 @@
             <option>Other</option>
           </select>
           <label for="rWhat">What happened?</label>
-          <textarea id="rWhat" name="Description" required placeholder="Describe the message, link, or call — no need to share OTPs or passwords"></textarea>
+          <textarea id="rWhat" name="fi-text-description" required placeholder="Describe the message, link, or call — no need to share OTPs or passwords"></textarea>
           <label for="rFile">Screenshot (optional)</label>
-          <input id="rFile" name="Screenshot" type="file" accept="image/*">
+          <input id="rFile" name="fi-file-screenshot" type="file" accept="image/*">
           <button class="btn btn-primary" type="submit">Submit Report</button>
           <p class="form-msg" id="reportMsg">Thank you for reaching out to Assam Cyber Aegis Team (ACAT). Your submission has been successfully received and securely recorded. Our team will review the provided information and get back to you as soon as possible. We appreciate your trust and support in building a safer digital environment.</p>
         </form>
@@ -282,15 +281,15 @@
         <form action="https://forminit.com/f/y0hlziu7uxe" method="POST" onsubmit="return handleForm(event,'joinMsg')">
           <input type="hidden" name="_subject" value="New Volunteer Sign-up — ACAT Website">
           <label for="jName">Name</label>
-          <input id="jName" name="Name" type="text" required>
+          <input id="jName" name="fi-sender-fullName" type="text" required>
           <label for="jContact">Phone</label>
-          <input id="jContact" name="Contact" type="text" required>
+          <input id="jContact" name="fi-phone-contact" type="text" required>
                                   <label for="jEmail">Email</label>
-          <input id="jEmail" name="Email" type="text" required>
+          <input id="jEmail" name="fi-sender-email" type="text" required>
           <label for="jCity">City / Town</label>
-          <input id="jCity" name="City" type="text" required>
+          <input id="jCity" name="fi-text-city" type="text" required>
           <label for="jWhy">Why do you want to join?</label>
-          <textarea id="jWhy" name="Reason"></textarea>
+          <textarea id="jWhy" name="fi-text-description"></textarea>
           <button class="btn btn-primary" type="submit">Submit</button>
           <p class="form-msg" id="joinMsg">Thank you for reaching out to Assam Cyber Aegis Team (ACAT). Your submission has been successfully received and securely recorded. Our team will review the provided information and get back to you as soon as possible. We appreciate your trust and support in building a safer digital environment.</p>
         </form>
