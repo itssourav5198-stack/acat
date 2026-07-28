@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Notices & Campaigns | ACAT</title>
+<meta name="description" content="Notices, awareness camp photos, and campaign updates from Assam Cyber Aegis Team (ACAT).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .filter-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px; }
+  .filter-btn{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.04em; text-transform:uppercase;
+    padding:9px 18px; border-radius:20px; border:1.5px solid rgba(29,34,51,.18); background:#fff;
+    color:var(--ink); cursor:pointer; transition:all .2s;
+  }
+  .filter-btn:hover{ border-color:var(--gold); }
+  .filter-btn.active{ background:var(--navy); color:var(--cream); border-color:var(--navy); }
+
+  .gallery-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; }
+  @media (max-width: 860px){ .gallery-grid{ grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px){ .gallery-grid{ grid-template-columns: 1fr; } }
+
+  .g-item{
+    background:#fff; border:1px solid rgba(29,34,51,.08); border-radius:var(--radius); overflow:hidden;
+    cursor:pointer; transition:transform .2s, box-shadow .2s;
+  }
+  .g-item:hover{ transform:translateY(-3px); box-shadow:0 12px 28px rgba(11,22,38,.14); }
+  .g-item .thumb{
+    width:100%; aspect-ratio: 4/3; background:linear-gradient(135deg, rgba(201,162,75,.18), rgba(166,61,46,.14));
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .g-item .thumb img{ width:100%; height:100%; object-fit:cover; }
+  .g-item .placeholder-icon{ font-size:28px; opacity:.5; }
+  .g-item .meta{ padding:14px 16px; }
+  .g-item .cat-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--red); margin-bottom:6px; display:block;
+  }
+  .g-item h3{ font-size:14.5px; font-weight:600; line-height:1.4; }
+  .g-item .date{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--slate-light); margin-top:6px; display:block; }
+
+  .empty-note{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--slate-light); text-align:center;
+    padding:40px 20px; grid-column: 1/-1;
+  }
+
+  #lightbox{
+    display:none; position:fixed; inset:0; background:rgba(11,22,38,.92); z-index:100;
+    align-items:center; justify-content:center; padding:40px;
+  }
+  #lightbox.show{ display:flex; }
+  #lightbox .lb-inner{ max-width:900px; width:100%; }
+  #lightbox img{ width:100%; max-height:70vh; object-fit:contain; border-radius:var(--radius); }
+  #lightbox .lb-caption{ color:var(--cream); text-align:center; margin-top:16px; font-size:14px; }
+  #lightbox .lb-close{
+    position:absolute; top:24px; right:32px; color:var(--cream); background:none; border:none;
+    font-size:28px; cursor:pointer; font-family:'IBM Plex Mono',monospace;
+  }
+  #lightbox .lb-close:hover{ color:var(--gold); }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand">
+      <span class="mark"><img id="logoMark" src="assets/logo.png" alt="ACAT logo" onerror="this.style.display='none'"></span>
+      ACAT
+    </a>
+    <button class="navtoggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="navlinks" id="navLinks">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="blog.html">Safety Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="link-checker.html">Check a Link</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div class="weave"></div>
+
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Gallery</span>
+    <h1>Notices, camps & campaigns.</h1>
+    <p>A running record of ACAT's outreach — awareness camp photos, notices, and community campaign updates.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="filter-row" id="filterRow"></div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<div id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()">✕ Close</button>
+  <div class="lb-inner">
+    <img id="lbImage" src="" alt="">
+    <p class="lb-caption" id="lbCaption"></p>
+  </div>
+</div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-line">ACAT</div>
+        <p>Assam Cyber Aegis Team is an independent, volunteer-run community initiative for digital safety awareness. Not affiliated with any government agency.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="blog.html">Safety Blog</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="link-checker.html">Check a Link</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Reach Us</h4>
+        <ul>
+          <li><a href="https://wa.me/919957322262" target="_blank" rel="noopener">Contact Us on WhatsApp</a></li>
+          <li><a href="mailto:dhirajvaii97@gmail.com">dhirajvaii97@gmail.com</a></li>
+          <li><a href="https://instagram.com/assam_cyber_aegis-team" target="_blank" rel="noopener">Instagram</a></li>
+          <li>Assam, India</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Assam Cyber Aegis Team</span>
+      <span>Website by LyroWeb Solutions</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/*
+  HOW TO ADD PHOTOS:
+  Drop image files into assets/gallery/ (create that folder in your repo),
+  then add one object per photo to the GALLERY_ITEMS array below.
+
+  category must be one of: "Notice", "Campaign", "Camp"
+  date is just a display label — write it however you like (e.g. "July 2026")
+*/
+const GALLERY_ITEMS = [
+  // Example — replace with your real entries:
+  // { src: "assets/gallery/camp-1.jpg", title: "Awareness camp at Govt. School, Jorhat", category: "Camp", date: "August 2026" },
+  // { src: "assets/gallery/notice-1.jpg", title: "Public notice: new WhatsApp scam alert", category: "Notice", date: "July 2026" },
+];
+
+const grid = document.getElementById('galleryGrid');
+const filterRow = document.getElementById('filterRow');
+let activeFilter = 'All';
+
+function renderFilters(){
+  const cats = ['All', ...new Set(GALLERY_ITEMS.map(i => i.category))];
+  filterRow.innerHTML = '';
+  cats.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (cat === activeFilter ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => { activeFilter = cat; renderFilters(); renderGrid(); };
+    filterRow.appendChild(btn);
+  });
+}
+
+function renderGrid(){
+  grid.innerHTML = '';
+  const items = activeFilter === 'All' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(i => i.category === activeFilter);
+
+  if(items.length === 0){
+    grid.innerHTML = '<p class="empty-note">No photos added yet — drop images into assets/gallery/ and list them in gallery.html to fill this section.</p>';
+    return;
+  }
+
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'g-item';
+    card.onclick = () => openLightbox(item.src, item.title);
+    card.innerHTML = `
+      <div class="thumb"><img src="${item.src}" alt="${item.title}" onerror="this.parentElement.innerHTML='<span class=\\'placeholder-icon\\'>🖼️</span>'"></div>
+      <div class="meta">
+        <span class="cat-tag">${item.category}</span>
+        <h3>${item.title}</h3>
+        <span class="date">${item.date}</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function openLightbox(src, caption){
+  document.getElementById('lbImage').src = src;
+  document.getElementById('lbCaption').textContent = caption;
+  document.getElementById('lightbox').classList.add('show');
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('show');
+}
+document.getElementById('lightbox').addEventListener('click', e => { if(e.target.id === 'lightbox') closeLightbox(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+
+renderFilters();
+renderGrid();
+
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+</script>
+
+</body>
+</html>
