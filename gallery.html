@@ -174,7 +174,7 @@ function renderGrid(){
   const items = activeFilter === 'All' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(i => i.category === activeFilter);
 
   if(items.length === 0){
-    grid.innerHTML = '<p class="empty-note">No photos added yet — drop images into assets/gallery/ and list them in gallery.html to fill this section.</p>';
+    grid.innerHTML = '<p class="empty-note">This much photos added yet.</p>';
     return;
   }
 
