@@ -31,7 +31,12 @@
     width:100%; aspect-ratio: 4/3; background:linear-gradient(135deg, rgba(201,162,75,.18), rgba(166,61,46,.14));
     display:flex; align-items:center; justify-content:center; overflow:hidden;
   }
-  .g-item .thumb img{ width:100%; height:100%; object-fit:cover; }
+.g-item .thumb{ position:relative; }
+.g-item .thumb img, .g-item .thumb video{ width:100%; height:100%; object-fit:cover; }
+.g-item .thumb .play-badge{
+  position:absolute; width:44px; height:44px; border-radius:50%; background:rgba(11,22,38,.72);
+  display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; pointer-events:none;
+}
   .g-item .placeholder-icon{ font-size:28px; opacity:.5; }
   .g-item .meta{ padding:14px 16px; }
   .g-item .cat-tag{
@@ -52,8 +57,7 @@
   }
   #lightbox.show{ display:flex; }
   #lightbox .lb-inner{ max-width:900px; width:100%; }
-  #lightbox img{ width:100%; max-height:70vh; object-fit:contain; border-radius:var(--radius); }
-  #lightbox .lb-caption{ color:var(--cream); text-align:center; margin-top:16px; font-size:14px; }
+#lightbox img, #lightbox video{ width:100%; max-height:70vh; object-fit:contain; border-radius:var(--radius); }  #lightbox .lb-caption{ color:var(--cream); text-align:center; margin-top:16px; font-size:14px; }
   #lightbox .lb-close{
     position:absolute; top:24px; right:32px; color:var(--cream); background:none; border:none;
     font-size:28px; cursor:pointer; font-family:'IBM Plex Mono',monospace;
@@ -99,6 +103,11 @@
 <div id="lightbox">
   <button class="lb-close" onclick="closeLightbox()">✕ Close</button>
   <div class="lb-inner">
+
+  <img id="lbImage" src="" alt="">
+  <video id="lbVideo" src="" controls autoplay style="display:none;"></video>
+  <p class="lb-caption" id="lbCaption"></p>
+</div>
     <img id="lbImage" src="" alt="">
     <p class="lb-caption" id="lbCaption"></p>
   </div>
@@ -162,7 +171,38 @@ function renderFilters(){
     filterRow.appendChild(btn);
   });
 }
+function isVideo(src){
+  return /\.(mp4|webm|mov|m4v)$/i.test(src);
+}
 
+function renderGrid(){
+  grid.innerHTML = '';
+  const items = activeFilter === 'All' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(i => i.category === activeFilter);
+
+  if(items.length === 0){
+    grid.innerHTML = '<p class="empty-note">This much photos added yet.</p>';
+    return;
+  }
+
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'g-item';
+    card.onclick = () => openLightbox(item.src, item.title);
+    const video = isVideo(item.src);
+    const thumbInner = video
+      ? `<video src="${item.src}#t=0.5" muted playsinline preload="metadata" onerror="this.parentElement.innerHTML='<span class=\\'placeholder-icon\\'>🖼️</span>'"></video><span class="play-badge">▶</span>`
+      : `<img src="${item.src}" alt="${item.title}" onerror="this.parentElement.innerHTML='<span class=\\'placeholder-icon\\'>🖼️</span>'">`;
+    card.innerHTML = `
+      <div class="thumb">${thumbInner}</div>
+      <div class="meta">
+        <span class="cat-tag">${item.category}</span>
+        <h3>${item.title}</h3>
+        <span class="date">${item.date}</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
 function renderGrid(){
   grid.innerHTML = '';
   const items = activeFilter === 'All' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(i => i.category === activeFilter);
@@ -189,16 +229,30 @@ function renderGrid(){
 }
 
 function openLightbox(src, caption){
-  document.getElementById('lbImage').src = src;
+  const img = document.getElementById('lbImage');
+  const vid = document.getElementById('lbVideo');
+  if(isVideo(src)){
+    img.style.display = 'none';
+    img.src = '';
+    vid.style.display = 'block';
+    vid.src = src;
+    vid.currentTime = 0;
+    vid.play().catch(()=>{});
+  } else {
+    vid.pause();
+    vid.style.display = 'none';
+    vid.src = '';
+    img.style.display = 'block';
+    img.src = src;
+  }
   document.getElementById('lbCaption').textContent = caption;
   document.getElementById('lightbox').classList.add('show');
 }
 function closeLightbox(){
   document.getElementById('lightbox').classList.remove('show');
+  const vid = document.getElementById('lbVideo');
+  vid.pause();
 }
-document.getElementById('lightbox').addEventListener('click', e => { if(e.target.id === 'lightbox') closeLightbox(); });
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
-
 renderFilters();
 renderGrid();
 
