@@ -185,6 +185,13 @@
 </footer>
 
 <script>
+/*
+  Each gallery card is now an "album": it can hold ONE or MANY media files.
+  - Single item:  { images: ["assets/gallery/notice-1.jpeg"], title: "...", category: "Notice", date: "..." }
+  - Multi item:   { images: ["a.jpg","b.jpg","c.mp4"], title: "...", category: "Camps", date: "..." }
+  Clicking a card opens the lightbox on the FIRST file, with prev/next + thumbnail
+  strip to browse every file inside that album.
+*/
 const GALLERY_ITEMS = [
   { images: ["assets/gallery/notice-1.jpeg"], title: "Public Notice by CEO", category: "Notice", date: "July 2026" },
   { images: ["assets/gallery/notice-2.png"], title: "Public Notice by CTO", category: "Notice", date: "July 2026" },
@@ -195,7 +202,11 @@ const GALLERY_ITEMS = [
     images: [
       "assets/gallery/1.jpeg",
       "assets/gallery/2.jpeg",
-      "assets/gallery/3.jpeg
+      "assets/gallery/3.jpeg"
+      /* jab aur camp photos assets/gallery/ me daale (4.jpeg, 5.jpeg...),
+         bas yahan ek line aur jod dena: "assets/gallery/4.jpeg", waghera.
+         Har line ke aakhir me comma lagana mat bhoolna (last wali chhod ke),
+         aur har filename double-quotes " " ke andar hona chahiye. */
     ],
     title: "Awareness camps by ACAT",
     category: "Camps",
