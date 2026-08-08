@@ -29,14 +29,18 @@
   .g-item:hover{ transform:translateY(-3px); box-shadow:0 12px 28px rgba(11,22,38,.14); }
   .g-item .thumb{
     width:100%; aspect-ratio: 4/3; background:linear-gradient(135deg, rgba(201,162,75,.18), rgba(166,61,46,.14));
-    display:flex; align-items:center; justify-content:center; overflow:hidden;
+    display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;
   }
-.g-item .thumb{ position:relative; }
-.g-item .thumb img, .g-item .thumb video{ width:100%; height:100%; object-fit:cover; }
-.g-item .thumb .play-badge{
-  position:absolute; width:44px; height:44px; border-radius:50%; background:rgba(11,22,38,.72);
-  display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; pointer-events:none;
-}
+  .g-item .thumb img, .g-item .thumb video{ width:100%; height:100%; object-fit:cover; }
+  .g-item .thumb .play-badge{
+    position:absolute; width:44px; height:44px; border-radius:50%; background:rgba(11,22,38,.72);
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; pointer-events:none;
+  }
+  .g-item .thumb .count-badge{
+    position:absolute; bottom:10px; right:10px; background:rgba(11,22,38,.78); color:#fff;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; padding:4px 9px; border-radius:20px;
+    display:flex; align-items:center; gap:5px; pointer-events:none;
+  }
   .g-item .placeholder-icon{ font-size:28px; opacity:.5; }
   .g-item .meta{ padding:14px 16px; }
   .g-item .cat-tag{
@@ -56,13 +60,46 @@
     align-items:center; justify-content:center; padding:40px;
   }
   #lightbox.show{ display:flex; }
-  #lightbox .lb-inner{ max-width:900px; width:100%; }
-#lightbox img, #lightbox video{ width:100%; max-height:70vh; object-fit:contain; border-radius:var(--radius); }  #lightbox .lb-caption{ color:var(--cream); text-align:center; margin-top:16px; font-size:14px; }
+  #lightbox .lb-inner{ max-width:900px; width:100%; position:relative; }
+  #lightbox img, #lightbox video{ width:100%; max-height:70vh; object-fit:contain; border-radius:var(--radius); background:#000; }
+  #lightbox .lb-caption{ color:var(--cream); text-align:center; margin-top:16px; font-size:14px; }
+  #lightbox .lb-counter{
+    color: var(--gold); text-align:center; margin-top:6px; font-size:12px;
+    font-family:'IBM Plex Mono',monospace; letter-spacing:.05em;
+  }
   #lightbox .lb-close{
-    position:absolute; top:24px; right:32px; color:var(--cream); background:none; border:none;
-    font-size:28px; cursor:pointer; font-family:'IBM Plex Mono',monospace;
+    position:absolute; top:-52px; right:0; color:var(--cream); background:none; border:none;
+    font-size:22px; cursor:pointer; font-family:'IBM Plex Mono',monospace;
   }
   #lightbox .lb-close:hover{ color:var(--gold); }
+  #lightbox .lb-nav{
+    position:absolute; top:50%; transform:translateY(-50%); background:rgba(11,22,38,.6);
+    color:#fff; border:none; width:44px; height:44px; border-radius:50%; font-size:20px;
+    cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s;
+  }
+  #lightbox .lb-nav:hover{ background:rgba(201,162,75,.85); }
+  #lightbox .lb-prev{ left:-58px; }
+  #lightbox .lb-next{ right:-58px; }
+  @media (max-width: 860px){
+    #lightbox{ padding:20px; }
+    #lightbox .lb-prev{ left:6px; }
+    #lightbox .lb-next{ right:6px; }
+    #lightbox .lb-close{ top:-40px; }
+  }
+  .lb-thumbs{
+    display:flex; gap:8px; margin-top:16px; overflow-x:auto; padding-bottom:4px;
+  }
+  .lb-thumbs img{
+    width:56px; height:56px; object-fit:cover; border-radius:4px; cursor:pointer; flex-shrink:0;
+    opacity:.5; border:2px solid transparent; transition:opacity .2s, border-color .2s;
+  }
+  .lb-thumbs img.active{ opacity:1; border-color:var(--gold); }
+  .lb-thumbs .vid-thumb{
+    width:56px; height:56px; border-radius:4px; cursor:pointer; flex-shrink:0;
+    opacity:.5; border:2px solid transparent; transition:opacity .2s, border-color .2s;
+    background:var(--navy-deep); display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px;
+  }
+  .lb-thumbs .vid-thumb.active{ opacity:1; border-color:var(--gold); }
 </style>
 </head>
 <body>
@@ -101,15 +138,15 @@
 </section>
 
 <div id="lightbox">
-  <button class="lb-close" onclick="closeLightbox()">✕ Close</button>
   <div class="lb-inner">
-
-  <img id="lbImage" src="" alt="">
-  <video id="lbVideo" src="" controls autoplay style="display:none;"></video>
-  <p class="lb-caption" id="lbCaption"></p>
-</div>
+    <button class="lb-close" onclick="closeLightbox()">✕ Close</button>
+    <button class="lb-nav lb-prev" id="lbPrev" onclick="stepLightbox(-1)">‹</button>
+    <button class="lb-nav lb-next" id="lbNext" onclick="stepLightbox(1)">›</button>
     <img id="lbImage" src="" alt="">
+    <video id="lbVideo" src="" controls style="display:none;"></video>
     <p class="lb-caption" id="lbCaption"></p>
+    <p class="lb-counter" id="lbCounter"></p>
+    <div class="lb-thumbs" id="lbThumbs"></div>
   </div>
 </div>
 
@@ -148,20 +185,42 @@
 </footer>
 
 <script>
-
+/*
+  Each gallery card is now an "album": it can hold ONE or MANY media files.
+  - Single item:  { images: ["assets/gallery/notice-1.jpeg"], title: "...", category: "Notice", date: "..." }
+  - Multi item:   { images: ["a.jpg","b.jpg","c.mp4"], title: "...", category: "Camps", date: "..." }
+  Clicking a card opens the lightbox on the FIRST file, with prev/next + thumbnail
+  strip to browse every file inside that album.
+*/
 const GALLERY_ITEMS = [
-  { src: "assets/gallery/notice-1.jpeg", title: "Public Notice by CEO", category: "Notice", date: "July 2026" },
-  { src: "assets/gallery/notice-2.png", title: "Public Notice by CTO", category: "Notice", date: "July 2026" },
-  { src: "assets/gallery/introv1.mp4", title: "Intro video by CTO", category: "Video", date: "July 2026" },
-  { src: "assets/gallery/notice-3.jpeg", title: "Public Notice by CEO", category: "Notice", date: "August 2026" },
-  { src: "assets/gallery/notice-4.jpeg", title: "Public Notice by CEO", category: "Notice", date: "August 2026" },
-  { src: "assets/gallery/awareness-1", title: "Awareness camps by ACAT", category: "Camps", date: "August 2026" },
-  { src: "assets/gallery/awareness-2", title: "Awareness camps by ACAT", category: "Camps", date: "August 2026" },
+  { images: ["assets/gallery/notice-1.jpeg"], title: "Public Notice by CEO", category: "Notice", date: "July 2026" },
+  { images: ["assets/gallery/notice-2.png"], title: "Public Notice by CTO", category: "Notice", date: "July 2026" },
+  { images: ["assets/gallery/introv1.mp4"], title: "Intro video by CTO", category: "Video", date: "July 2026" },
+  { images: ["assets/gallery/notice-3.jpeg"], title: "Public Notice by CEO", category: "Notice", date: "August 2026" },
+  { images: ["assets/gallery/notice-4.jpeg"], title: "Public Notice by CEO", category: "Notice", date: "August 2026" },
+  {
+    images: [
+      "assets/gallery/awareness-1.jpeg",
+      "assets/gallery/awareness-2.jpeg"
+      /* add as many photos from this camp as you want — just keep adding filenames here */
+    ],
+    title: "Awareness camps by ACAT",
+    category: "Camps",
+    date: "August 2026"
+  },
 ];
 
 const grid = document.getElementById('galleryGrid');
 const filterRow = document.getElementById('filterRow');
 let activeFilter = 'All';
+
+let currentAlbum = [];
+let currentIndex = 0;
+let currentCaption = '';
+
+function isVideo(src){
+  return /\.(mp4|webm|mov|m4v)$/i.test(src);
+}
 
 function renderFilters(){
   const cats = ['All', ...new Set(GALLERY_ITEMS.map(i => i.category))];
@@ -174,9 +233,6 @@ function renderFilters(){
     filterRow.appendChild(btn);
   });
 }
-function isVideo(src){
-  return /\.(mp4|webm|mov|m4v)$/i.test(src);
-}
 
 function renderGrid(){
   grid.innerHTML = '';
@@ -188,39 +244,23 @@ function renderGrid(){
   }
 
   items.forEach(item => {
+    const cover = item.images[0];
+    const extraCount = item.images.length - 1;
     const card = document.createElement('div');
     card.className = 'g-item';
-    card.onclick = () => openLightbox(item.src, item.title);
-    const video = isVideo(item.src);
-    const thumbInner = video
-      ? `<video src="${item.src}#t=0.5" muted playsinline preload="metadata" onerror="this.parentElement.innerHTML='<span class=\\'placeholder-icon\\'>🖼️</span>'"></video><span class="play-badge">▶</span>`
-      : `<img src="${item.src}" alt="${item.title}" onerror="this.parentElement.innerHTML='<span class=\\'placeholder-icon\\'>🖼️</span>'">`;
-    card.innerHTML = `
-      <div class="thumb">${thumbInner}</div>
-      <div class="meta">
-        <span class="cat-tag">${item.category}</span>
-        <h3>${item.title}</h3>
-        <span class="date">${item.date}</span>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-}
-function renderGrid(){
-  grid.innerHTML = '';
-  const items = activeFilter === 'All' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(i => i.category === activeFilter);
+    card.onclick = () => openLightbox(item.images, item.title, 0);
 
-  if(items.length === 0){
-    grid.innerHTML = '<p class="empty-note">This much photos added yet.</p>';
-    return;
-  }
+    const coverIsVideo = isVideo(cover);
+    const coverInner = coverIsVideo
+      ? `<video src="${cover}#t=0.5" muted playsinline preload="metadata" onerror="this.parentElement.innerHTML='<span class=\\'placeholder-icon\\'>🖼️</span>'"></video><span class="play-badge">▶</span>`
+      : `<img src="${cover}" alt="${item.title}" onerror="this.parentElement.innerHTML='<span class=\\'placeholder-icon\\'>🖼️</span>'">`;
 
-  items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'g-item';
-    card.onclick = () => openLightbox(item.src, item.title);
+    const countBadge = extraCount > 0
+      ? `<span class="count-badge">🖼️ +${extraCount}</span>`
+      : '';
+
     card.innerHTML = `
-      <div class="thumb"><img src="${item.src}" alt="${item.title}" onerror="this.parentElement.innerHTML='<span class=\\'placeholder-icon\\'>🖼️</span>'"></div>
+      <div class="thumb">${coverInner}${countBadge}</div>
       <div class="meta">
         <span class="cat-tag">${item.category}</span>
         <h3>${item.title}</h3>
@@ -231,9 +271,20 @@ function renderGrid(){
   });
 }
 
-function openLightbox(src, caption){
+function openLightbox(images, caption, startIndex){
+  currentAlbum = images;
+  currentCaption = caption;
+  currentIndex = startIndex || 0;
+  renderLightboxThumbs();
+  showLightboxItem();
+  document.getElementById('lightbox').classList.add('show');
+}
+
+function showLightboxItem(){
+  const src = currentAlbum[currentIndex];
   const img = document.getElementById('lbImage');
   const vid = document.getElementById('lbVideo');
+
   if(isVideo(src)){
     img.style.display = 'none';
     img.src = '';
@@ -248,14 +299,62 @@ function openLightbox(src, caption){
     img.style.display = 'block';
     img.src = src;
   }
-  document.getElementById('lbCaption').textContent = caption;
-  document.getElementById('lightbox').classList.add('show');
+
+  document.getElementById('lbCaption').textContent = currentCaption;
+
+  const counter = document.getElementById('lbCounter');
+  counter.textContent = currentAlbum.length > 1
+    ? `${currentIndex + 1} / ${currentAlbum.length}`
+    : '';
+
+  const multi = currentAlbum.length > 1;
+  document.getElementById('lbPrev').style.display = multi ? 'flex' : 'none';
+  document.getElementById('lbNext').style.display = multi ? 'flex' : 'none';
+  document.getElementById('lbThumbs').style.display = multi ? 'flex' : 'none';
+
+  document.querySelectorAll('.lb-thumbs img, .lb-thumbs .vid-thumb').forEach((el, i) => {
+    el.classList.toggle('active', i === currentIndex);
+  });
 }
+
+function renderLightboxThumbs(){
+  const wrap = document.getElementById('lbThumbs');
+  wrap.innerHTML = '';
+  if(currentAlbum.length <= 1) return;
+  currentAlbum.forEach((src, i) => {
+    if(isVideo(src)){
+      const d = document.createElement('div');
+      d.className = 'vid-thumb';
+      d.textContent = '▶';
+      d.onclick = () => { currentIndex = i; showLightboxItem(); };
+      wrap.appendChild(d);
+    } else {
+      const t = document.createElement('img');
+      t.src = src;
+      t.onclick = () => { currentIndex = i; showLightboxItem(); };
+      wrap.appendChild(t);
+    }
+  });
+}
+
+function stepLightbox(dir){
+  if(currentAlbum.length <= 1) return;
+  currentIndex = (currentIndex + dir + currentAlbum.length) % currentAlbum.length;
+  showLightboxItem();
+}
+
 function closeLightbox(){
   document.getElementById('lightbox').classList.remove('show');
-  const vid = document.getElementById('lbVideo');
-  vid.pause();
+  document.getElementById('lbVideo').pause();
 }
+
+document.addEventListener('keydown', (e) => {
+  if(!document.getElementById('lightbox').classList.contains('show')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') stepLightbox(-1);
+  if(e.key === 'ArrowRight') stepLightbox(1);
+});
+
 renderFilters();
 renderGrid();
 
