@@ -10,10 +10,33 @@
   // ---------- 1. Styles ----------
   const style = document.createElement("style");
   style.textContent = `
+    #acat-chat-root {
+      --acat-accent: #0f766e;
+      --acat-accent-contrast: #fff;
+      --acat-bg: #ffffff;
+      --acat-body-bg: #f4f6f7;
+      --acat-text: #111111;
+      --acat-border: #e5e7eb;
+      --acat-input-border: #d1d5db;
+      --acat-bot-bubble: #e5e7eb;
+      --acat-bot-text: #111111;
+      --acat-chip-bg: #ffffff;
+    }
+    #acat-chat-root[data-theme="dark"] {
+      --acat-bg: #1e2327;
+      --acat-body-bg: #15181b;
+      --acat-text: #e8eaed;
+      --acat-border: #33393f;
+      --acat-input-border: #3a4046;
+      --acat-bot-bubble: #2b3238;
+      --acat-bot-text: #e8eaed;
+      --acat-chip-bg: #1e2327;
+    }
+
     #acat-chat-btn {
       position: fixed; bottom: 22px; right: 22px; z-index: 9999;
       width: 58px; height: 58px; border-radius: 50%;
-      background: #0f766e; color: #fff; border: none; cursor: pointer;
+      background: var(--acat-accent); color: var(--acat-accent-contrast); border: none; cursor: pointer;
       box-shadow: 0 6px 18px rgba(0,0,0,.25);
       display: flex; align-items: center; justify-content: center;
       font-size: 26px; transition: transform .2s ease;
@@ -23,47 +46,84 @@
     #acat-chat-window {
       position: fixed; bottom: 92px; right: 22px; z-index: 9999;
       width: 320px; max-width: 90vw; height: 440px; max-height: 70vh;
-      background: #fff; border-radius: 14px; overflow: hidden;
+      background: var(--acat-bg); border-radius: 14px; overflow: hidden;
       box-shadow: 0 10px 30px rgba(0,0,0,.3);
       display: none; flex-direction: column;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      transition: background .2s ease;
     }
     #acat-chat-window.open { display: flex; }
 
     #acat-chat-header {
-      background: #0f766e; color: #fff; padding: 14px 16px;
+      background: var(--acat-accent); color: var(--acat-accent-contrast); padding: 14px 16px;
       font-weight: 600; font-size: 15px;
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
     }
     #acat-chat-header span.sub { font-weight: 400; font-size: 11px; opacity: .85; display: block; }
-    #acat-chat-close { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; }
+    #acat-chat-header-actions { display: flex; align-items: center; gap: 4px; }
+    #acat-theme-toggle, #acat-chat-close {
+      background: none; border: none; color: #fff; font-size: 16px; cursor: pointer;
+      width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+      border-radius: 6px;
+    }
+    #acat-theme-toggle:hover, #acat-chat-close:hover { background: rgba(255,255,255,.15); }
 
     #acat-chat-body {
       flex: 1; overflow-y: auto; padding: 12px;
-      background: #f4f6f7; display: flex; flex-direction: column; gap: 8px;
+      background: var(--acat-body-bg); display: flex; flex-direction: column; gap: 8px;
+      transition: background .2s ease;
     }
     .acat-msg { max-width: 82%; padding: 8px 12px; border-radius: 12px; font-size: 13.5px; line-height: 1.4; white-space: pre-wrap; }
-    .acat-msg.bot { background: #e5e7eb; color: #111; align-self: flex-start; border-bottom-left-radius: 2px; }
-    .acat-msg.user { background: #0f766e; color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
+    .acat-msg.bot { background: var(--acat-bot-bubble); color: var(--acat-bot-text); align-self: flex-start; border-bottom-left-radius: 2px; }
+    .acat-msg.user { background: var(--acat-accent); color: var(--acat-accent-contrast); align-self: flex-end; border-bottom-right-radius: 2px; }
 
-    #acat-quick-replies { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 12px 8px; }
+    #acat-quick-replies { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 12px 8px; background: var(--acat-body-bg); }
     .acat-chip {
-      background: #fff; border: 1px solid #0f766e; color: #0f766e;
+      background: var(--acat-chip-bg); border: 1px solid var(--acat-accent); color: var(--acat-accent);
       font-size: 12px; padding: 5px 10px; border-radius: 999px; cursor: pointer;
     }
-    .acat-chip:hover { background: #0f766e; color: #fff; }
+    .acat-chip:hover { background: var(--acat-accent); color: var(--acat-accent-contrast); }
 
-    #acat-chat-input-row { display: flex; border-top: 1px solid #e5e7eb; padding: 8px; gap: 6px; }
+    #acat-chat-input-row { display: flex; border-top: 1px solid var(--acat-border); padding: 8px; gap: 6px; background: var(--acat-bg); }
     #acat-chat-input {
-      flex: 1; border: 1px solid #d1d5db; border-radius: 999px; padding: 8px 14px;
-      font-size: 13px; outline: none;
+      flex: 1; border: 1px solid var(--acat-input-border); border-radius: 999px; padding: 8px 14px;
+      font-size: 13px; outline: none; background: var(--acat-bg); color: var(--acat-text);
     }
     #acat-chat-send {
-      background: #0f766e; color: #fff; border: none; border-radius: 999px;
+      background: var(--acat-accent); color: var(--acat-accent-contrast); border: none; border-radius: 999px;
       width: 36px; height: 36px; cursor: pointer; font-size: 15px;
     }
   `;
   document.head.appendChild(style);
+
+  // ---------- 1b. Theme handling (system / light / dark) ----------
+  const THEME_KEY = "acat-chat-theme"; // stores "system" | "light" | "dark"
+  const THEME_ICONS = { system: "🖥️", light: "☀️", dark: "🌙" };
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+  const root = document.createElement("div");
+  root.id = "acat-chat-root";
+
+  function getSavedTheme() {
+    try { return localStorage.getItem(THEME_KEY) || "system"; }
+    catch (e) { return "system"; }
+  }
+  function saveTheme(t) {
+    try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+  }
+  function resolvedTheme(pref) {
+    return pref === "system" ? (mediaQuery.matches ? "dark" : "light") : pref;
+  }
+  function applyTheme(pref) {
+    root.setAttribute("data-theme", resolvedTheme(pref));
+    const toggle = document.getElementById("acat-theme-toggle");
+    if (toggle) toggle.textContent = THEME_ICONS[pref];
+  }
+
+  let currentThemePref = getSavedTheme();
+  mediaQuery.addEventListener("change", () => {
+    if (currentThemePref === "system") applyTheme("system");
+  });
 
   // ---------- 2. HTML ----------
   const btn = document.createElement("button");
@@ -76,7 +136,10 @@
   win.innerHTML = `
     <div id="acat-chat-header">
       <div>ACAT Assistant<span class="sub">Assam Cyber Aegis Team</span></div>
-      <button id="acat-chat-close" aria-label="Close chat">✕</button>
+      <div id="acat-chat-header-actions">
+        <button id="acat-theme-toggle" aria-label="Toggle theme" title="Toggle theme (system/light/dark)"></button>
+        <button id="acat-chat-close" aria-label="Close chat">✕</button>
+      </div>
     </div>
     <div id="acat-chat-body"></div>
     <div id="acat-quick-replies"></div>
@@ -86,8 +149,10 @@
     </div>
   `;
 
-  document.body.appendChild(btn);
-  document.body.appendChild(win);
+  root.appendChild(btn);
+  root.appendChild(win);
+  document.body.appendChild(root);
+  applyTheme(currentThemePref);
 
   // ---------- 3. FAQ knowledge base (edit freely) ----------
   const FAQ = [
@@ -213,4 +278,12 @@
   win.querySelector("#acat-chat-close").addEventListener("click", () => win.classList.remove("open"));
   win.querySelector("#acat-chat-send").addEventListener("click", () => handleSend());
   input.addEventListener("keydown", e => { if (e.key === "Enter") handleSend(); });
+
+  // Cycle: system -> light -> dark -> system ...
+  win.querySelector("#acat-theme-toggle").addEventListener("click", () => {
+    const order = ["system", "light", "dark"];
+    currentThemePref = order[(order.indexOf(currentThemePref) + 1) % order.length];
+    saveTheme(currentThemePref);
+    applyTheme(currentThemePref);
+  });
 })();
