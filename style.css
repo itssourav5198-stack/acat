@@ -260,3 +260,27 @@ footer a:hover{ color: var(--gold); }
 
 .reveal{ opacity:0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.in{ opacity:1; transform: translateY(0); }
+
+/* PENETRATION TESTING PRICING */
+.pricing-section{ padding: 70px 0; background: var(--navy); }
+.pricing-section .eyebrow{ color: var(--gold); }
+.pricing-section .section-head h2{ color: var(--cream); }
+.pricing-section .section-head p{ color: rgba(245,240,230,0.75); max-width: 620px; margin: 12px auto 0; }
+.pricing-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:24px; max-width: 760px; margin: 40px auto 0; }
+@media (max-width: 720px){ .pricing-grid{ grid-template-columns: 1fr; } }
+.pricing-card{
+  background: rgba(245,240,230,0.04);
+  border: 1px solid rgba(245,240,230,0.14);
+  border-radius: var(--radius);
+  padding: 30px 26px;
+  color: var(--cream);
+  text-align:center;
+}
+.pricing-card.featured{ border-color: var(--gold); background: rgba(201,162,75,0.08); }
+.pricing-tag{ font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color: var(--gold); margin-bottom:10px; }
+.pricing-card h3{ font-size:20px; margin-bottom:6px; }
+.pricing-card .price{ font-family:'Fraunces',serif; font-size:34px; margin:0 0 18px; color: var(--cream); }
+.pricing-card .price span{ font-size:14px; color: rgba(245,240,230,0.6); font-family:'IBM Plex Sans',sans-serif; }
+.pricing-features{ list-style:none; padding:0; margin: 0 0 22px; text-align:left; font-size:13.5px; }
+.pricing-features li{ padding: 6px 0 6px 20px; position:relative; color: rgba(245,240,230,0.85); }
+.pricing-features li::before{ content:"✓"; position:absolute; left:0; color: var(--gold); }

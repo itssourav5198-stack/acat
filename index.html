@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Assam Cyber Aegis Team (ACAT) — Weaving a Safer Digital Assam</title>
     <link rel="icon" type="image/jpeg" href="acat.jpeg">
-<meta name="description" content="Assam Cyber Aegis Team (ACAT) is an independent volunteer group helping people across Assam stay safe from online scams, phishing, and fraud — free of cost. Report a scam or join as a volunteer.">
+<meta name="description" content="Assam Cyber Aegis Team (ACAT) is an independent volunteer group helping people across Assam stay safe from online scams, phishing, and fraud. Free guidance and awareness for everyone, plus a one-time free penetration test for scam victims. Report a scam or join as a volunteer.">
 <meta name="keywords" content="Assam Cyber Aegis Team, ACAT, cyber safety Assam, report scam Assam, phishing awareness, cyber security volunteer Assam, scam reporting Guwahati">
 <link rel="canonical" href="https://acat-aegis.vercel.app/">
 
 <!-- Open Graph / social share preview -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Assam Cyber Aegis Team (ACAT) — Cyber Safety & Scam Awareness in Assam">
-<meta property="og:description" content="Independent volunteer cyber-safety initiative helping people across Assam stay safe from online scams and phishing — free of cost.">
+<meta property="og:description" content="Independent volunteer cyber-safety initiative helping people across Assam stay safe from online scams and phishing. Guidance is always free — technical penetration testing is free once per person, then a nominal fee.">
 <meta property="og:url" content="https://acat-aegis.vercel.app/">
 <meta property="og:image" content="https://acat-aegis.vercel.app/acat.jpeg">
 <meta name="twitter:card" content="summary_large_image">
@@ -53,6 +53,7 @@
       <li><a href="blog.html">Safety Blog</a></li>
         <li><a href="gallery.html">Gallery</a></li>
       <li><a href="#impact">Impact</a></li>
+      <li><a href="#pentest">Penetration Test</a></li>
       <li><a href="#report">Report a Scam</a></li>
       <li><a href="#join">Join Us</a></li>
               <li><a href="link-checker.html">Check a Link</a></li>
@@ -67,7 +68,7 @@
   <div class="wrap hero-inner">
     <span class="eyebrow">Assam Cyber Aegis Team</span>
     <h1>Weaving a <em>safer digital Assam</em>, one thread at a time.</h1>
-    <p class="lead">ACAT is an independent, volunteer-run community helping people across Assam recognise scams, stay safe online, and know exactly where to turn when something goes wrong — free of cost.</p>
+    <p class="lead">ACAT is an independent, volunteer-run community helping people across Assam recognise scams, stay safe online, and know exactly where to turn when something goes wrong. Guidance and awareness are always free — a hands-on penetration test is free the first time, then a small fee for further support.</p>
     <div class="cta-row">
       <a href="#report" class="btn btn-primary">Report a Scam</a>
       <a href="#join" class="btn btn-ghost">Join as Volunteer</a>
@@ -84,7 +85,7 @@
         <span class="eyebrow">Our Mission</span>
         <h2 style="font-size:28px; margin-bottom:16px;">Cyber safety for everyone.</h2>
         <p>Just like a gamosa is woven thread by thread until it holds strong, ACAT is built volunteer by volunteer — ordinary people across Assam sharing what they know so their families, neighbours, and communities don't fall prey to online fraud.</p>
-        <p>We don't charge for guidance, we don't ask for your OTP or bank details, and we always point serious cases toward the official cybercrime channels.</p>
+        <p>We don't charge for guidance or awareness, we don't ask for your OTP or bank details, and we always point serious cases toward the official cybercrime channels. Every scam victim also gets one free penetration test to check for further compromise — after that, a small ₹579 fee applies to keep the service sustainable.</p>
         <div class="note-box">Every report shared with us is handled with care. For matters involving money or personal documents, we guide you to file directly at <strong>cybercrime.gov.in</strong> or call <strong>1930</strong> — our volunteers assist, they don't replace official action.</div>
       </div>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:18px;" class="reveal">
@@ -240,6 +241,58 @@
   </div>
 </section>
 
+<section class="pricing-section" id="pentest">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Technical Support</span>
+      <h2>Penetration testing for scam victims.</h2>
+      <p>If you've been scammed and worry your device, account, or network is still compromised, our team can run a hands-on security check — free the first time, per person.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="pricing-tag">First time</div>
+        <h3>Free</h3>
+        <p class="price">₹0</p>
+        <ul class="pricing-features">
+          <li>One penetration test per person, completely free</li>
+          <li>Basic device &amp; account compromise check</li>
+          <li>Guidance on securing your accounts</li>
+        </ul>
+        <a href="#pentest-request" class="btn btn-ghost">Request Free Test</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-tag">After first use</div>
+        <h3>Standard</h3>
+        <p class="price">₹579 <span>/ request</span></p>
+        <ul class="pricing-features">
+          <li>Full penetration test &amp; report</li>
+          <li>Priority handling by the technical team</li>
+          <li>Follow-up guidance until the issue is resolved</li>
+        </ul>
+        <a href="#pentest-request" class="btn btn-primary">Request &amp; Pay</a>
+      </div>
+    </div>
+    <p class="helpline-note" style="text-align:center; margin-top:16px;">Reporting a scam and getting general safety guidance stays free for everyone, always — this fee applies only to hands-on penetration testing requests after your first free use.</p>
+
+    <div class="form-card" id="pentest-request" style="max-width:560px; margin:32px auto 0;">
+      <h3>Request a Penetration Test</h3>
+      <p class="sub">We'll check if you've already used your free test, and guide you from there.</p>
+      <form id="pentestForm" onsubmit="return handlePentestRequest(event)">
+        <label for="ptName">Name</label>
+        <input id="ptName" name="name" type="text" required>
+        <label for="ptContact">Phone (Include +91)</label>
+        <input id="ptContact" name="phone" type="text" required>
+        <label for="ptEmail">Email</label>
+        <input id="ptEmail" name="email" type="email" required>
+        <label for="ptWhat">What do you need checked?</label>
+        <textarea id="ptWhat" name="details" required placeholder="e.g. suspicious app access, hacked account, phone compromise"></textarea>
+        <button class="btn btn-primary" type="submit">Check Eligibility &amp; Continue</button>
+        <p class="form-msg" id="pentestMsg"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
 <section class="forms-section">
   <div class="wrap">
     <div class="section-head reveal">
@@ -363,6 +416,45 @@ alert('Network error — submission nahi ho payi. Please try again.');
 });
 return false;
 }
+
+  function handlePentestRequest(e){
+    e.preventDefault();
+    const form = e.target;
+    const msg = document.getElementById('pentestMsg');
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Checking...';
+    const payload = {
+      name: form.name.value,
+      phone: form.phone.value,
+      email: form.email.value,
+      details: form.details.value,
+    };
+    fetch('/api/pentest-eligibility', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+      .then(res => res.json())
+      .then(data => {
+        msg.textContent = data.message || 'Request submitted.';
+        msg.classList.add('show');
+        if (data.status === 'paid' && data.payment_url) {
+          setTimeout(() => { window.location.href = data.payment_url; }, 1200);
+        } else {
+          form.reset();
+        }
+      })
+      .catch(() => {
+        msg.textContent = 'Network error — please try again ya WhatsApp par contact karo.';
+        msg.classList.add('show');
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Check Eligibility & Continue';
+      });
+    return false;
+  }
 
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
