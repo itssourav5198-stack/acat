@@ -162,7 +162,7 @@
     { keys: ["hi", "hello", "hey", "namaste"],
       a: "Hey! 👋 I'm the ACAT assistant. Ask me about our mission, reporting cybercrime, safety, or how to reach us." },
     { keys: ["free", "cost", "charge", "money to use", "paid service"],
-      a: "Yes, all ACAT services — guidance, awareness sessions, and support — are completely free for the public. We're a volunteer-run initiative." },
+      a: "Yes, all ACAT services — guidance, awareness sessions, and support — are free for the public only for first time after that some fees for maintenance and security charged by user. We're a volunteer-run initiative." },
     { keys: ["legit", "genuine", "real organisation", "real organization", "official", "trust", "trustworthy"],
       a: "ACAT is a genuine volunteer initiative focused on cyber-safety in Assam. You can verify our team and work through the About/Team section on this website." },
 
@@ -172,7 +172,7 @@
     { keys: ["data privacy", "privacy policy", "my data", "personal information", "data safe", "misuse data"],
       a: "We take privacy seriously. Any information you share (like in a report) is used only to help resolve your issue — check our Privacy Policy page for full details." },
     { keys: ["otp", "password share", "share password", "share otp"],
-      a: "Never share your OTP, password, or PIN with anyone — ACAT, banks, or any legit organisation will NEVER ask for these." },
+      a: "Never share your OTP, password, or PIN with anyone — ACAT, banks, or any legit organisation will NEVER ask for these. We also not ask you to share any OTP or card pin." },
 
     // --- Reporting / cybercrime help ---
     { keys: ["report", "complaint", "scam", "fraud", "hacked", "cheated", "money lost", "lost money online"],
@@ -199,14 +199,14 @@
       a: "You can reach ACAT through the contact form on this website. We usually respond within 1-2 working days." },
     { keys: ["ceo", "founder", "dhiraj"],
       a: "Dhiraj Nath is the CEO of ACAT." },
-    { keys: ["cto", "sourav", "technical", "developer", "website made by", "who built"],
+    { keys: ["cto", "sourav", "technical", "developer"],
       a: "Sourav Maity is the CTO of ACAT, handling the tech and website side of things. The website was built by LyroWeb Solutions." },
+   { keys: ["website made by", "who built", "backend team", "backend"],
+      a: "The website was built and secured by LyroWeb Solutions. However, the tech and website side things handled by Sourav Maity." },
     { keys: ["location", "based in", "where are you", "assam only", "outside assam"],
-      a: "ACAT is based in Assam and primarily focused on the region, though our online guidance and awareness content is useful for anyone." },
+      a: "ACAT is based in Assam and but focusing on PAN India, though our online guidance and awareness content is useful for anyone." },
 
     // --- Donation / awareness ---
-    { keys: ["donate", "donation", "psf", "support us", "funding"],
-      a: "You can support our cause through the PSF (People Support Foundation) donation initiative linked from our website — funds go towards helping students and people in need." },
     { keys: ["awareness", "workshop", "training", "school", "seminar", "session"],
       a: "ACAT runs cyber-safety awareness workshops, including AI-literacy and safe-internet sessions for schools and communities." },
 
@@ -217,7 +217,7 @@
       a: "Take care and stay cyber-safe! 👋" },
   ];
 
-  const FALLBACK = "Hmm, mujhe iska exact jawab nahi pata 🙏 — aap humein contact form se directly reach kar sakte ho, ya '1930' pe cybercrime helpline call kar sakte ho.";
+  const FALLBACK = "Hmm, mujhe iska exact jawab nahi pata 🙏 — aap humein contact form se directly reach kar sakte ho.";
 
   const QUICK_REPLIES = [
     "What is ACAT?",
@@ -225,7 +225,7 @@
     "How to report a scam?",
     "Is this service free?",
     "How to join as volunteer?",
-    "Contact info"
+    "Contact info",
   ];
 
   // ---------- 4. Logic ----------
