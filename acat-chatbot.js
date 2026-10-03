@@ -223,7 +223,6 @@
     "What is ACAT?",
     "Is it secure and safe?",
     "How to report a scam?",
-    "Is this service free?",
     "How to join as volunteer?",
     "Contact info",
   ];
