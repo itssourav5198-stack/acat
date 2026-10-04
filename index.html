@@ -22,8 +22,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Assam Cyber Aegis Team ",
-      "name": "ACAT",
+  "name": "Assam Cyber Aegis Team (ACAT)",
   "url": "https://acat-aegis.vercel.app/",
   "description": "Independent volunteer cyber-safety initiative helping people across Assam stay safe from online scams and phishing.",
   "areaServed": "Assam, India",
@@ -404,27 +403,41 @@ Thank you, Assam Cyber Aegis for the help and support. Keep doing the good work 
 <script>
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
-  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  navToggle.setAttribute('aria-expanded', 'false');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(open));
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }));
 
   function handleForm(e, msgId){
-e.preventDefault();
-const form = e.target;
-fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
-.then(res => {
-if (res.ok) {
-document.getElementById(msgId).classList.add('show');
-form.reset();
-} else {
-alert('Submission failed. Please try again ya WhatsApp pe contact karo.');
-}
-})
-.catch(() => {
-alert('Network error — submission nahi ho payi. Please try again.');
-});
-return false;
-}
-
+    e.preventDefault();
+    const form = e.target;
+    const btn = form.querySelector('button[type=submit]');
+    const msg = document.getElementById(msgId);
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    msg.classList.remove('show');
+    fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+      .then(res => {
+        if (!res.ok) throw new Error('Submission failed');
+        msg.textContent = 'Thanks — your message was received. Our team will review it and get back to you soon.';
+        msg.classList.add('show');
+        form.reset();
+      })
+      .catch(() => {
+        msg.textContent = 'We could not send this right now. Please try again or contact ACAT on WhatsApp.';
+        msg.classList.add('show');
+        msg.style.color = 'var(--red)';
+        msg.style.background = 'rgba(185,67,53,.1)';
+      })
+      .finally(() => { btn.disabled = false; btn.textContent = original; });
+    return false;
+  }
   function handlePentestRequest(e){
     e.preventDefault();
     const form = e.target;
@@ -470,6 +483,7 @@ return false;
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
 </script>
+<script src="site-enhancements.js"></script>
 <script src="acat-chatbot.js"></script>
     <script src="theme-toggle.js"></script>
 </body>
